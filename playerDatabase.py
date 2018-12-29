@@ -23,6 +23,9 @@ salary_data = pd.read_csv('data/salary_data.csv')
 battingcols = ['YEAR','TEAM','GP', 'AB', 'R', 'H', '2B', '3B', 'HR', 'RBI', 'BB', 'SO', 'SB', 'CS', 'AVG', 'OBP', 'SLG', 'OPS', 'WAR', 'ESPN_ID']
 battingstats = pd.DataFrame(columns=battingcols)
 
+pitchingcols = ['SEASON', 'TEAM', 'GP', 'GS', 'CG', 'SHO', 'IP', 'H', 'R', 'ER', 'HR', 'BB', 'SO', 'W', 'L', 'SV', 'HLD', 'BLSV', 'WAR', 'WHIP', 'ERA', 'ESPN_ID']
+pitchingstats = pd.DataFrame(columns=pitchingcols)
+
 #iterating through dataframe and placing data into database
 rows1 = []
 for row in player_IDS.itertuples(index=True, name='Pandas'):
@@ -106,7 +109,7 @@ for row in player_IDS.itertuples(index=True, name='Pandas'):
                 elif contract_df[contract_df.Team!=team]:
                     contract_df.drop(row)
     except:
-        pass
+        print(espn_name, "no contract")
 
 
     #get contract data
@@ -141,12 +144,14 @@ for row in player_IDS.itertuples(index=True, name='Pandas'):
 
 
     if list(stats.columns.values) == battingcols:
-        battingstats= pd.concat([battingstats, stats])
+        battingstats = pd.concat([battingstats, stats])
+    elif list(stats.columns.values) == pitchingcols:
+        pitchingstats = pd.concat([pitchingstats, stats])
     else:
         playererror = pd.DataFrame([[espn_id, espn_name, mlb_name]], columns=['ESPN_ID', 'ESPN_NAME', 'MLB_NAME'])
-        errorlog= pd.concat([errorlog, ])
+        errorlog = pd.concat([errorlog, playererror])
 
-    print(battingstats)
+    print(pitchingstats)
     print(count)
     count+=1
     # try:
@@ -159,6 +164,7 @@ for row in player_IDS.itertuples(index=True, name='Pandas'):
 
 errorlog.to_csv('csvtest/errorlog.csv')
 battingstats.to_csv('csvtest/battingstats.csv')
+pitchingstats.to_csv('csvtest/pitchingstats.csv')
 #     print(len(rows1))
 #     if len(rows1) < 1000:
 #         rows1.append(dict(mlb_id=mlb_id, mlb_name=mlb_name, espn_name=espn_name, cbs_name=cbs_name, espn_id=espn_id, team=team, position=position, birth_year=birth_year, bats=bats, throws=throws, sign_year=sign_year, years_active=years_active, length=length, total_value=total_value, avg_value=avg_value, current_salary=current_salary))
