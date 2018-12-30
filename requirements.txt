@@ -6,3 +6,5 @@ sqlalchemy
 requests
 lxml
 html5lib
+flask
+flask-restful

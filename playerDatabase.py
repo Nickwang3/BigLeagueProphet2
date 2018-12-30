@@ -12,13 +12,17 @@ errorlog = pd.DataFrame(columns=['ESPN_ID', 'ESPN_NAME', 'MLB_NAME'])
 
 count = 0
 #connect to postgres database on aws using dataset library and sqlalchemy
-engine = create_engine('postgresql://awsnick:nickadmin@playersdatabase.cs3khvsyqwtx.us-east-2.rds.amazonaws.com:5432/playersdatabase', echo=False)
+engine = create_engine('postgresql://awsnick:nickadmin@playersdatabase.cs3khvsyqwtx.us-east-2.rds.amazonaws.com:5432/mlb', echo=False)
 
 #update ids and salary data
 
 #creating player_id and salary_data dataframe in pandas
 player_IDS = pd.read_csv('data/IDS.csv', encoding='ANSI')
 salary_data = pd.read_csv('data/salary_data.csv')
+
+
+playerscol = ['MLB_ID', 'MLB_NAME', 'ESPN_NAME', 'CBS_NAME', 'ESPN_ID', 'TEAM', 'POSITION', 'BIRTH_YEAR', 'BATS', 'THROWS', 'SIGN_YEAR', 'YEARS_ACTIVE', 'LENGTH', 'TOTAL_VALUE', 'AVG_VALUE', 'CURRENT_SALARY']
+players = pd.DataFrame(columns=playerscol)
 
 battingcols = ['YEAR','TEAM','GP', 'AB', 'R', 'H', '2B', '3B', 'HR', 'RBI', 'BB', 'SO', 'SB', 'CS', 'AVG', 'OBP', 'SLG', 'OPS', 'WAR', 'ESPN_ID']
 battingstats = pd.DataFrame(columns=battingcols)
@@ -141,7 +145,9 @@ for row in player_IDS.itertuples(index=True, name='Pandas'):
         print(espn_id)
         continue
 
+    playerrow = [mlb_id, mlb_name, espn_name, cbs_name, espn_id, team, position, birth_year, bats, throws, sign_year, years_active, length, total_value, avg_value, current_salary]
 
+    players = pd.concat([players, playerrow])
 
     if list(stats.columns.values) == battingcols:
         battingstats = pd.concat([battingstats, stats])
@@ -151,34 +157,16 @@ for row in player_IDS.itertuples(index=True, name='Pandas'):
         playererror = pd.DataFrame([[espn_id, espn_name, mlb_name]], columns=['ESPN_ID', 'ESPN_NAME', 'MLB_NAME'])
         errorlog = pd.concat([errorlog, playererror])
 
-    print(pitchingstats)
+
     print(count)
     count+=1
-    # try:
-    #     stats.to_sql(mlb_id, con=engine, if_exists='replace')
-    # except:
-    #     print(mlb_name, mlb_id)
 
-    #inserting rows in table1 in bulk
-    #currently needs table to be cleared each time or has duplicate information
 
-errorlog.to_csv('csvtest/errorlog.csv')
-battingstats.to_csv('csvtest/battingstats.csv')
-pitchingstats.to_csv('csvtest/pitchingstats.csv')
-#     print(len(rows1))
-#     if len(rows1) < 1000:
-#         rows1.append(dict(mlb_id=mlb_id, mlb_name=mlb_name, espn_name=espn_name, cbs_name=cbs_name, espn_id=espn_id, team=team, position=position, birth_year=birth_year, bats=bats, throws=throws, sign_year=sign_year, years_active=years_active, length=length, total_value=total_value, avg_value=avg_value, current_salary=current_salary))
-#         print('added ' + str(count))
-#         count=count+1
-#     else:
-#         table1.insert_many(rows1, ['mlb_id'])
-#         print('inserted')
-#         rows1 = []
-#
-#
-#
-#     #inserting stats in table2
-#
-#
-#
-# table1.insert_many(rows1, ['mlb_id'])
+battingstats.to_sql('battingstats', con=engine, chunksize=1000, if_exists='replace')
+pitchingstats.to_sql('pitchingstats', con=engine, chunksize=1000, if_exists='replace')
+players.to_sql('players', con=engine, chunksize=1000, if_exists='replace')
+
+errorlog.to_csv('data/errorlog.csv')
+battingstats.to_csv('data/battingstats.csv')
+pitchingstats.to_csv('data/pitchingstats.csv')
+players.to_csv('data/pitchingstats.csv')
