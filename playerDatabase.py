@@ -12,7 +12,7 @@ errorlog = pd.DataFrame(columns=['ESPN_ID', 'ESPN_NAME', 'MLB_NAME'])
 
 count = 0
 #connect to postgres database on aws using dataset library and sqlalchemy
-engine = create_engine('postgresql://awsnick:nickadmin@playersdatabase.cs3khvsyqwtx.us-east-2.rds.amazonaws.com:5432/mlb', echo=False)
+engine = create_engine('postgresql://awsnick:nickadmin@playersdatabase.cs3khvsyqwtx.us-east-2.rds.amazonaws.com:5432/players', echo=False)
 
 #update ids and salary data
 
