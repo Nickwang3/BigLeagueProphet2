@@ -20,7 +20,7 @@ engine = create_engine('postgresql://awsnick:nickadmin@playersdatabase.cs3khvsyq
 player_IDS = pd.read_csv('data/IDS.csv', encoding='ANSI')
 salary_data = pd.read_csv('data/salary_data.csv')
 
-
+#datatables and their columns
 playerscol = ['MLB_ID', 'MLB_NAME', 'ESPN_NAME', 'CBS_NAME', 'ESPN_ID', 'TEAM', 'POSITION', 'BIRTH_YEAR', 'BATS', 'THROWS', 'SIGN_YEAR', 'YEARS_ACTIVE', 'LENGTH', 'TOTAL_VALUE', 'AVG_VALUE', 'CURRENT_SALARY']
 players = pd.DataFrame(columns=playerscol)
 
@@ -135,7 +135,7 @@ for row in player_IDS.itertuples(index=True, name='Pandas'):
         current_salary = 'null'
 
 
-    #grabbing player stats and placing into individual tables
+    #grabbing player stats
     try:
         stats = getPlayerStats(espn_id, espn_name)
         stats['ESPN_ID'] = espn_id
@@ -145,8 +145,8 @@ for row in player_IDS.itertuples(index=True, name='Pandas'):
         print(espn_id)
         continue
 
+    #concat the dataframes with the new players data
     playerrow = [mlb_id, mlb_name, espn_name, cbs_name, espn_id, team, position, birth_year, bats, throws, sign_year, years_active, length, total_value, avg_value, current_salary]
-
     players = pd.concat([players, playerrow])
 
     if list(stats.columns.values) == battingcols:
@@ -162,6 +162,8 @@ for row in player_IDS.itertuples(index=True, name='Pandas'):
     count+=1
 
 
+
+#storing into the database and a backup csv file
 battingstats.to_sql('battingstats', con=engine, chunksize=1000, if_exists='replace')
 pitchingstats.to_sql('pitchingstats', con=engine, chunksize=1000, if_exists='replace')
 players.to_sql('players', con=engine, chunksize=1000, if_exists='replace')
