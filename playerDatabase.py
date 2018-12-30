@@ -139,14 +139,13 @@ for row in player_IDS.itertuples(index=True, name='Pandas'):
     try:
         stats = getPlayerStats(espn_id, espn_name)
         stats['ESPN_ID'] = espn_id
-        print(stats)
     except:
         print(espn_name)
         print(espn_id)
         continue
 
     #concat the dataframes with the new players data
-    playerrow = pd.DataFrame([mlb_id, mlb_name, espn_name, cbs_name, espn_id, team, position, birth_year, bats, throws, sign_year, years_active, length, total_value, avg_value, current_salary], columns=playerscol)
+    playerrow = pd.DataFrame([[mlb_id, mlb_name, espn_name, cbs_name, espn_id, team, position, birth_year, bats, throws, sign_year, years_active, length, total_value, avg_value, current_salary]], columns=playerscol)
     players = pd.concat([players, playerrow])
 
     if list(stats.columns.values) == battingcols:
