@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@blueprintjs/core": "^3.10.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-scripts-ts": "3.1.0"
@@ -16,16 +17,18 @@
     "build-storybook": "build-storybook"
   },
   "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@storybook/addon-actions": "^4.1.4",
+    "@storybook/addon-links": "^4.1.4",
+    "@storybook/addons": "^4.1.4",
+    "@storybook/react": "^4.1.4",
     "@types/jest": "^23.3.9",
     "@types/node": "^10.12.10",
     "@types/react": "^16.7.6",
     "@types/react-dom": "^16.0.9",
-    "typescript": "^3.1.6",
-    "@storybook/react": "^4.1.4",
-    "@storybook/addon-actions": "^4.1.4",
-    "@storybook/addon-links": "^4.1.4",
-    "@storybook/addons": "^4.1.4",
-    "@babel/core": "^7.2.2",
-    "babel-loader": "^8.0.4"
+    "@types/storybook__react": "^4.0.0",
+    "awesome-typescript-loader": "^5.2.1",
+    "babel-loader": "^8.0.4",
+    "typescript": "^3.1.6"
   }
 }
