@@ -8,3 +8,4 @@ lxml
 html5lib
 flask
 flask-restful
+tensorflow
