@@ -5,5 +5,6 @@ a complete redesign of the backend and frontend framework as well as new salary 
 salary data is taken from [USAToday](https://www.usatoday.com/sports/mlb/salaries/)
 player data is taken from [CrunchTimeBaseball](http://crunchtimebaseball.com/baseball_map.html)
 player statistics are taken from [ESPN](http://www.espn.com/)
-- 'python salary_and_ids.py'
-- 'python playersDatabase.py'
+To run:
+- `python salary_and_ids.py`
+- `python playersDatabase.py`
