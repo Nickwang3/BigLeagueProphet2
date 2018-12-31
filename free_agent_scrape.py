@@ -7,6 +7,7 @@ import csv
 import requests
 import pandas as pd
 from sqlalchemy import create_engine
+from data.globalvar import current_year, last_completed_season
 
 engine = create_engine('postgresql://awsnick:nickadmin@playersdatabase.cs3khvsyqwtx.us-east-2.rds.amazonaws.com:5432/players', echo=False)
 
@@ -17,13 +18,15 @@ engine = create_engine('postgresql://awsnick:nickadmin@playersdatabase.cs3khvsyq
 
 #free agent signings from 2010 till most recent offseason are to be tracked
 yeariter = 2010
-mostrecentseason = 2018
-currentyear = 2018
+# mostrecentseason = 2018
+# currentyear = 2018
+print(current_year)
+print(last_completed_season)
 
 free_agent_signings = pd.DataFrame(columns=['ESPN_ID', 'ESPN_NAME', 'AGE', 'POSITION', 'YEARS', 'TOTAL_VALUE'])
 
 
-while yeariter < mostrecentseason:
+while yeariter < last_completed_season:
 
 # my_url = "http://www.espn.com/mlb/freeagents"
     my_url = "http://www.espn.com/mlb/freeagents/_/year/" + str(yeariter)
@@ -63,7 +66,7 @@ while yeariter < mostrecentseason:
         position = tds[1].text
         current_age = tds[2].text
         try:
-            age_at_signing = str(int(current_age) - (currentyear - yeariter))
+            age_at_signing = str(int(current_age) - (current_year - yeariter))
         except ValueError:
             pass
 
