@@ -5,7 +5,7 @@ import pandas as pd
 def get_stats_as_df(mlb_id):
 
     engine = create_engine('postgresql://awsnick:nickadmin@playersdatabase.cs3khvsyqwtx.us-east-2.rds.amazonaws.com:5432/players', echo=False)
-    query1 = 'SELECT * FROM players WHERE mlb_id = id:'
+    query1 = 'SELECT * FROM players WHERE "MLB_ID" = %(id)s'
     player_info = pd.read_sql(query1, con=engine, params={'id':mlb_id})
 
     for row in player_info.itertuples(index=True, name='Pandas'):
