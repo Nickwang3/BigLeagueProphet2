@@ -1,6 +1,7 @@
 #library for database retrieval methods
 from sqlalchemy import create_engine
 import pandas as pd
+import numpy as np
 
 def get_stats_as_df(mlb_id):
 
@@ -27,4 +28,5 @@ def get_list_of_ids():
     query1 = 'SELECT "MLB_ID" FROM players'
     mlb_id_list = pd.read_sql(query1, con=engine)
 
-    return mlb_id_list.values.astype(list)
+    mlb_id_list = mlb_id_list.values.flatten()
+    return mlb_id_list
