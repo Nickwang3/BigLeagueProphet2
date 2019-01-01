@@ -20,3 +20,11 @@ def get_stats_as_df(mlb_id):
         stats = pd.read_sql(query2, con=engine, params={'id':espn_id})
 
     return stats
+
+def get_list_of_ids():
+
+    engine = create_engine('postgresql://awsnick:nickadmin@playersdatabase.cs3khvsyqwtx.us-east-2.rds.amazonaws.com:5432/players', echo=False)
+    query1 = 'SELECT "MLB_ID" FROM players'
+    mlb_id_list = pd.read_sql(query1, con=engine)
+
+    return mlb_id_list.values.astype(list)
