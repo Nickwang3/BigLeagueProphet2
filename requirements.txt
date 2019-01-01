@@ -9,3 +9,6 @@ html5lib
 flask
 flask-restful
 tensorflow
+
+#following will be relaced with tensorflow library eventually
+sklearn
