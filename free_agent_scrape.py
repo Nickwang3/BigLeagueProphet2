@@ -23,7 +23,7 @@ yeariter = 2010
 print(current_year)
 print(last_completed_season)
 
-free_agent_signings = pd.DataFrame(columns=['ESPN_ID', 'ESPN_NAME', 'AGE', 'POSITION', 'YEARS', 'TOTAL_VALUE'])
+free_agent_signings = pd.DataFrame(columns=['ESPN_ID', 'ESPN_NAME', 'AGE', 'POSITION', 'YEARS', 'TOTAL_VALUE', "YEAR_SIGNED"])
 
 
 while yeariter < last_completed_season:
@@ -80,7 +80,7 @@ while yeariter < last_completed_season:
             print (td.text, end=" ")
         print()
 
-        df = pd.DataFrame([[espn_id, espn_name, age_at_signing, position, years, total_value]], columns=['ESPN_ID', 'ESPN_NAME', 'AGE', 'POSITION', 'YEARS', 'TOTAL_VALUE'])
+        df = pd.DataFrame([[espn_id, espn_name, age_at_signing, position, years, total_value, yeariter]], columns=['ESPN_ID', 'ESPN_NAME', 'AGE', 'POSITION', 'YEARS', 'TOTAL_VALUE', 'YEAR_SIGNED'])
         free_agent_signings = free_agent_signings.append(df)
 
 
