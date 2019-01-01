@@ -31,10 +31,10 @@ def get_list_of_ids():
     mlb_id_list = mlb_id_list.values.flatten()
     return mlb_id_list
 
-def get_player_as_df(mlb_id):
+def get_player_info_as_dict(mlb_id):
 
     engine = create_engine('postgresql://awsnick:nickadmin@playersdatabase.cs3khvsyqwtx.us-east-2.rds.amazonaws.com:5432/players', echo=False)
     query1 = 'SELECT * FROM players WHERE "MLB_ID" = %(id)s'
     player_info = pd.read_sql(query1, con=engine, params={'id':mlb_id})
 
-    return player_info
+    return player_info.to_dict()
