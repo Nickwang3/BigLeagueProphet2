@@ -39,3 +39,9 @@ def get_player_info_as_dict(mlb_id, engine):
         player_info[key] = player_info[key][0]
 
     return player_info
+
+def insert_prediction(mlb_id, colname, prediction, engine):
+
+    statement = text('INSERT INTO players (:colname) VALUES (:prediction) WHERE "MLB_ID" = :id')
+    conn = engine.connect()
+    query = conn.execute(statement, id=mlb_id, colname=colname, prediction=prediction)
