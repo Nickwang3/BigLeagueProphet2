@@ -34,4 +34,8 @@ def get_player_info_as_dict(mlb_id, engine):
     query1 = 'SELECT * FROM players WHERE "MLB_ID" = %(id)s'
     player_info = pd.read_sql(query1, con=engine, params={'id':mlb_id})
 
-    return player_info.to_dict(orient='list')
+    player_info = player_info.to_dict(orient='list')
+    for key in player_info:
+        player_info[key] = player_info[key][0]
+
+    return player_info
